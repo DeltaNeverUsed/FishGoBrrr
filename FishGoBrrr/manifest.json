@@ -1,0 +1,11 @@
+{
+  "Id": "deltaneverused.fishgobrrr",
+  "AssemblyPath": "FishGoBrrr.dll",
+  "PackPath": "FishGoBrrr.pck",
+  "Metadata": {
+    "Name": "Buttplug",
+    "Author": "DeltaNeverUsed",
+    "Version": "1.0.0",
+    "Description": "Support for buttplug.io"
+  }
+}
