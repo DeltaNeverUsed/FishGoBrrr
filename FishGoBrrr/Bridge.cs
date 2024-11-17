@@ -17,8 +17,11 @@ public class Bridge
 
     private async void Run()
     {
+        Mod.LogInformation("Starting bridge");
         _tcpListener.Start();
+        Mod.LogInformation("Bridge started");
         var client = await _tcpListener.AcceptTcpClientAsync();
+        Mod.LogInformation("Client connected");
 
         HandleClient(client);
     }
@@ -50,7 +53,7 @@ public class Bridge
                 }
                 catch (Exception e)
                 {
-                    Mod.LogInformation("Received message error: " + e);
+                    Mod.LogInformation("Received message error: " + clientMessage);
                 }
                 
             }
@@ -59,6 +62,9 @@ public class Bridge
 
     private async void HandleMessage(BridgeMessage message)
     {
+        if (!Client.IsConnected)
+            return;
+        
         switch (message.Action)
         {
             case ButtAction.Vibrate:

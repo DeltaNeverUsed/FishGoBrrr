@@ -9,6 +9,8 @@ public class ButtClient
 
     private readonly ButtplugSystemTextJsonConverter _converter = new();
     private readonly ButtplugClient _buttplugClient;
+
+    public bool IsConnected => _buttplugClient.IsConnected;
     
     public ButtClient()
     {
@@ -40,6 +42,8 @@ public class ButtClient
 
     public async Task StopAllIn(double seconds)
     {
+        if (!_buttplugClient.IsConnected)
+            return;
         if (seconds <= 0)
             return;
         await Task.Delay((int)(seconds * 1000), CancellationToken);
@@ -48,6 +52,8 @@ public class ButtClient
     
     public async Task Vibrate(double scalar, double time)
     {
+        if (!_buttplugClient.IsConnected)
+            return;
         if (scalar < 0.01)
             return;
         //Mod.LogInformation($"Vibrating at {scalar} time = {time}");
@@ -56,5 +62,10 @@ public class ButtClient
         _ = StopAllIn(time);
     }
 
-    public async Task StopAll() => await _buttplugClient.StopAllDevicesAsync(CancellationToken);
+    public async Task StopAll()
+    {
+        if (!_buttplugClient.IsConnected)
+            return;
+        await _buttplugClient.StopAllDevicesAsync(CancellationToken);
+    }
 }
