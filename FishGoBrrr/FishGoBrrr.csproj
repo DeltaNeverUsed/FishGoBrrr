@@ -8,27 +8,24 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <Reference Include="GDWeave" Private="false"/>
-        <Reference Include="Serilog" Private="false"/>
+        <Reference Include="GDWeave" Private="false" />
     </ItemGroup>
 
     <ItemGroup>
-        <None Include="manifest.json" CopyToOutputDirectory="PreserveNewest"/>
+        <None Include="manifest.json" CopyToOutputDirectory="PreserveNewest" />
     </ItemGroup>
 
     <ItemGroup>
       <PackageReference Include="Buttplug.Net" Version="0.1.0-ci0094" />
-      <PackageReference Include="Buttplug.Net.SystemTextJson" Version="0.1.0-ci0094"  />
+      <PackageReference Include="Buttplug.Net.SystemTextJson" Version="0.1.0-ci0094" />
+      <PackageReference Include="Serilog" Version="4.1.0" />
     </ItemGroup>
 
     <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(GDWeavePath)' != ''">
         <ItemGroup>
-            <_SourceFiles Include="$(OutDir)\**\*.*"/>
+            <_SourceFiles Include="$(OutDir)\**\*.*" />
         </ItemGroup>
 
-        <Copy
-                SourceFiles="@(_SourceFiles)"
-                DestinationFolder="$(GDWeavePath)/mods/$(AssemblyName)"
-        />
+        <Copy SourceFiles="@(_SourceFiles)" DestinationFolder="$(GDWeavePath)/mods/$(AssemblyName)" />
     </Target>
 </Project>

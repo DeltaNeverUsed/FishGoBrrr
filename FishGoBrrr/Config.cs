@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using Buttplug;
+using System.Text.Json.Serialization;
 
 namespace FishGoBrrr;
 
@@ -40,4 +41,6 @@ public class Config
     [JsonInclude] public double MashVibrate = 0.1d;
 
     [JsonInclude] public double BadProgressVibrate = 0.005d;
+
+    [JsonInclude] public string[] TriggerActuatorTypes = Enum.GetNames(typeof(ActuatorType));
 }
