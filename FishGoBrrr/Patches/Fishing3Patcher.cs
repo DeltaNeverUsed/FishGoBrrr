@@ -10,7 +10,7 @@ public class Fishing3Patcher : IScriptMod
 
     public IEnumerable<Token> Modify(string path, IEnumerable<Token> tokens)
     {
-        MultiTokenWaiter ysHealthWaiter = new MultiTokenWaiter([
+        var ysHealthWaiter = new MultiTokenWaiter([
             t => t.Type == TokenType.OpAssignSub,
             t => t is IdentifierToken { Name: "params" },
             t => t.Type == TokenType.BracketOpen,
@@ -19,14 +19,14 @@ public class Fishing3Patcher : IScriptMod
             t => t.Type == TokenType.Newline,
         ]);
 
-        MultiTokenWaiter badProgressWaiter = new MultiTokenWaiter([
+        var badProgressWaiter = new MultiTokenWaiter([
             t => t is IdentifierToken { Name: "value" },
             t => t.Type == TokenType.OpAssign,
             t => t is IdentifierToken { Name: "bad_progress" },
             t => t.Type == TokenType.Newline,
         ]);
 
-        MultiTokenWaiter reachedEndWaiter = new MultiTokenWaiter([
+        var reachedEndWaiter = new MultiTokenWaiter([
             t => t.Type == TokenType.PrFunction,
             t => t is IdentifierToken { Name: "_reached_end" },
             t => t.Type == TokenType.ParenthesisOpen,
@@ -36,13 +36,13 @@ public class Fishing3Patcher : IScriptMod
             t => t.Type == TokenType.Newline,
         ]);
 
-        foreach (Token token in tokens)
+        foreach (var token in tokens)
         {
             if (ysHealthWaiter.Check(token))
             {
                 yield return token;
 
-                foreach (Token t in Helpers.GetMain())
+                foreach (var t in Helpers.GetMain())
                     yield return t;
                 yield return new Token(TokenType.Period);
                 yield return new IdentifierToken("continues_vibrate");
@@ -60,7 +60,7 @@ public class Fishing3Patcher : IScriptMod
                 yield return new IdentifierToken("over");
                 yield return new Token(TokenType.Colon);
 
-                foreach (Token t in Helpers.GetMain())
+                foreach (var t in Helpers.GetMain())
                     yield return t;
                 yield return new Token(TokenType.Period);
                 yield return new IdentifierToken("vibrate");
@@ -77,7 +77,7 @@ public class Fishing3Patcher : IScriptMod
             {
                 yield return token;
 
-                foreach (Token t in Helpers.GetMain())
+                foreach (var t in Helpers.GetMain())
                     yield return t;
                 yield return new Token(TokenType.Period);
                 yield return new IdentifierToken("stop");

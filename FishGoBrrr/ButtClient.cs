@@ -58,9 +58,9 @@ public class ButtClient
         if (scalar < 0.01)
             return;
         //Mod.LogInformation($"Vibrating at {scalar} time = {time}");
-        foreach (ButtplugDevice device in _buttplugClient.Devices)
+        foreach (var device in _buttplugClient.Devices)
         {
-            foreach (ButtplugDeviceActuator actuatorType in device.Actuators)
+            foreach (var actuatorType in device.Actuators)
             {
                 if (actuatorType == null)
                     continue;

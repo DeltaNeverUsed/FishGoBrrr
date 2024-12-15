@@ -10,7 +10,7 @@ public class ScratchTicketPatcher : IScriptMod
 
     public IEnumerable<Token> Modify(string path, IEnumerable<Token> tokens)
     {
-        MultiTokenWaiter physicsProcessWaiter = new MultiTokenWaiter([
+        var physicsProcessWaiter = new MultiTokenWaiter([
             t => t.Type == TokenType.PrFunction,
             t => t is IdentifierToken { Name: "_physics_process" },
             t => t.Type == TokenType.ParenthesisOpen,
@@ -20,24 +20,24 @@ public class ScratchTicketPatcher : IScriptMod
             t => t.Type == TokenType.Newline
         ]);
 
-        MultiTokenWaiter winWaiter = new MultiTokenWaiter([
+        var winWaiter = new MultiTokenWaiter([
             t => t.Type == TokenType.ParenthesisOpen,
             t => t is ConstantToken { Value: StringVariant { Value: "jingle_win" } },
             t => t.Type == TokenType.ParenthesisClose,
         ]);
-        MultiTokenWaiter loseWaiter = new MultiTokenWaiter([
+        var loseWaiter = new MultiTokenWaiter([
             t => t.Type == TokenType.ParenthesisOpen,
             t => t is ConstantToken { Value: StringVariant { Value: "jingle_lose" } },
             t => t.Type == TokenType.ParenthesisClose,
         ]);
 
-        foreach (Token token in tokens)
+        foreach (var token in tokens)
         {
             if (physicsProcessWaiter.Check(token))
             {
                 yield return token;
 
-                foreach (Token t in Helpers.GetMain())
+                foreach (var t in Helpers.GetMain())
                     yield return t;
                 yield return new Token(TokenType.Period);
                 yield return new IdentifierToken("continues_vibrate");
@@ -56,7 +56,7 @@ public class ScratchTicketPatcher : IScriptMod
                 yield return token;
 
                 yield return new Token(TokenType.Newline, 3);
-                foreach (Token t in Helpers.VibrateConstants(Mod.Config.WinGamblingVibrate,
+                foreach (var t in Helpers.VibrateConstants(Mod.Config.WinGamblingVibrate,
                              Mod.Config.WinGamblingDuration))
                     yield return t;
             }
@@ -65,7 +65,7 @@ public class ScratchTicketPatcher : IScriptMod
                 yield return token;
 
                 yield return new Token(TokenType.Newline, 3);
-                foreach (Token t in Helpers.VibrateConstants(Mod.Config.LoseGamblingVibrate,
+                foreach (var t in Helpers.VibrateConstants(Mod.Config.LoseGamblingVibrate,
                              Mod.Config.LoseGamblingDuration))
                     yield return t;
             }

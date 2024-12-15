@@ -10,7 +10,7 @@ public class ChalkCanvasPatcher : IScriptMod
 
     public IEnumerable<Token> Modify(string path, IEnumerable<Token> tokens)
     {
-        MultiTokenWaiter addBrushWaiter = new MultiTokenWaiter([
+        var addBrushWaiter = new MultiTokenWaiter([
             t => t.Type == TokenType.PrFunction,
             t => t is IdentifierToken { Name: "_add_brush" },
             t => t.Type == TokenType.ParenthesisOpen,
@@ -24,13 +24,13 @@ public class ChalkCanvasPatcher : IScriptMod
             t => t.Type == TokenType.Newline
         ]);
 
-        foreach (Token token in tokens)
+        foreach (var token in tokens)
         {
             if (addBrushWaiter.Check(token))
             {
                 yield return token;
 
-                foreach (Token t in Helpers.GetMain())
+                foreach (var t in Helpers.GetMain())
                     yield return t;
                 yield return new Token(TokenType.Period);
                 yield return new IdentifierToken("continues_vibrate");
