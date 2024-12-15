@@ -20,7 +20,7 @@ public class Bridge
         Mod.LogInformation("Starting bridge");
         _tcpListener.Start();
         Mod.LogInformation("Bridge started");
-        var client = await _tcpListener.AcceptTcpClientAsync();
+        TcpClient client = await _tcpListener.AcceptTcpClientAsync();
         Mod.LogInformation("Client connected");
 
         HandleClient(client);
@@ -32,17 +32,17 @@ public class Bridge
 
         using (client)
         {
-            var stream = client.GetStream();
-            var buffer = new byte[1024];
+            NetworkStream stream = client.GetStream();
+            byte[] buffer = new byte[1024];
 
             while (client.Connected)
             {
-                var bytesRead = await stream.ReadAsync(buffer);
-                var clientMessage = Encoding.UTF8.GetString(buffer, 0, bytesRead);
+                int bytesRead = await stream.ReadAsync(buffer);
+                string clientMessage = Encoding.UTF8.GetString(buffer, 0, bytesRead);
                 
                 try
                 {
-                    var message = JsonSerializer.Deserialize<BridgeMessage>(clientMessage);
+                    BridgeMessage? message = JsonSerializer.Deserialize<BridgeMessage>(clientMessage);
                     if (message == null)
                     {
                         Mod.LogInformation("Received null message");

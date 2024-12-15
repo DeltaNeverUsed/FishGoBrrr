@@ -10,7 +10,7 @@ public class PlayerPatcher : IScriptMod
 
     public IEnumerable<Token> Modify(string path, IEnumerable<Token> tokens)
     {
-        var fishingStartWaiter = new MultiTokenWaiter([
+        MultiTokenWaiter fishingStartWaiter = new MultiTokenWaiter([
             t => t.Type == TokenType.Newline,
             t => t is IdentifierToken { Name: "failed_casts" },
             t => t.Type == TokenType.OpAssign,
@@ -18,7 +18,7 @@ public class PlayerPatcher : IScriptMod
             t => t.Type == TokenType.Newline
         ]);
 
-        var jumpWaiter = new MultiTokenWaiter([
+        MultiTokenWaiter jumpWaiter = new MultiTokenWaiter([
             t => t is IdentifierToken { Name: "request_jump" },
             t => t.Type == TokenType.OpAssign,
             t => t is ConstantToken { Value: BoolVariant { Value: false } },
@@ -37,7 +37,7 @@ public class PlayerPatcher : IScriptMod
             t => t.Type == TokenType.Newline
         ]);
 
-        var mushroomWaiter = new MultiTokenWaiter([
+        MultiTokenWaiter mushroomWaiter = new MultiTokenWaiter([
             t => t.Type == TokenType.PrFunction,
             t => t is IdentifierToken { Name: "_mushroom_bounce" },
             t => t.Type == TokenType.ParenthesisOpen,
@@ -52,7 +52,7 @@ public class PlayerPatcher : IScriptMod
             t => t.Type == TokenType.Newline
         ], false, true);
 
-        var punchedWaiter = new MultiTokenWaiter([
+        MultiTokenWaiter punchedWaiter = new MultiTokenWaiter([
             t => t is IdentifierToken { Name: "bounce_vert" },
             t => t.Type == TokenType.OpAssign,
             t => t is ConstantToken,
@@ -65,8 +65,8 @@ public class PlayerPatcher : IScriptMod
             t => t is IdentifierToken { Name: "ZERO" },
             t => t.Type == TokenType.Newline
         ], false, true);
-        
-        var killWaiter = new MultiTokenWaiter([
+
+        MultiTokenWaiter killWaiter = new MultiTokenWaiter([
             t => t.Type == TokenType.PrFunction,
             t => t is IdentifierToken { Name: "_kill" },
             t => t.Type == TokenType.ParenthesisOpen,
@@ -78,13 +78,13 @@ public class PlayerPatcher : IScriptMod
             t => t.Type == TokenType.Newline
         ]);
         
-        foreach (var token in tokens)
+        foreach (Token token in tokens)
         {
             if (fishingStartWaiter.Check(token))
             {
                 yield return token;
 
-                foreach (var t in Helpers.VibrateConstants(Mod.Config.BiteVibrate, Mod.Config.BiteDuration))
+                foreach (Token t in Helpers.VibrateConstants(Mod.Config.BiteVibrate, Mod.Config.BiteDuration))
                     yield return t;
                 yield return new Token(TokenType.Newline, 1);
             }
@@ -92,7 +92,7 @@ public class PlayerPatcher : IScriptMod
             {
                 yield return token;
 
-                foreach (var t in Helpers.VibrateConstants(Mod.Config.JumpVibrate, Mod.Config.JumpDuration))
+                foreach (Token t in Helpers.VibrateConstants(Mod.Config.JumpVibrate, Mod.Config.JumpDuration))
                     yield return t;
                 yield return new Token(TokenType.Newline, 3);
             }
@@ -100,7 +100,7 @@ public class PlayerPatcher : IScriptMod
             {
                 yield return token;
 
-                foreach (var t in Helpers.VibrateConstants(Mod.Config.MushroomVibrate, Mod.Config.MushroomDuration))
+                foreach (Token t in Helpers.VibrateConstants(Mod.Config.MushroomVibrate, Mod.Config.MushroomDuration))
                     yield return t;
                 yield return new Token(TokenType.Newline, 1);
             }
@@ -108,7 +108,7 @@ public class PlayerPatcher : IScriptMod
             {
                 yield return token;
 
-                foreach (var t in Helpers.VibrateConstants(Mod.Config.PunchedVibrate, Mod.Config.PunchedDuration))
+                foreach (Token t in Helpers.VibrateConstants(Mod.Config.PunchedVibrate, Mod.Config.PunchedDuration))
                     yield return t;
                 yield return new Token(TokenType.Newline, 1);
             }
@@ -116,7 +116,7 @@ public class PlayerPatcher : IScriptMod
             {
                 yield return token;
 
-                foreach (var t in Helpers.VibrateConstants(Mod.Config.DieVibrate, Mod.Config.DieVibrate))
+                foreach (Token t in Helpers.VibrateConstants(Mod.Config.DieVibrate, Mod.Config.DieVibrate))
                     yield return t;
                 yield return new Token(TokenType.Newline, 1);
             }

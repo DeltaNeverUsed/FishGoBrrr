@@ -7,7 +7,7 @@ public static class Helpers
 {
     public static IEnumerable<Token> VibrateConstants(double scaler, double duration)
     {
-        foreach (var token in GetMain()) yield return token;
+        foreach (Token token in GetMain()) yield return token;
         yield return new Token(TokenType.Period);
         yield return new IdentifierToken("vibrate");
         yield return new Token(TokenType.ParenthesisOpen);
