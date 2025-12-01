@@ -1,5 +1,5 @@
-﻿using Buttplug;
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
+using Buttplug.Core.Messages;
 
 namespace FishGoBrrr;
 

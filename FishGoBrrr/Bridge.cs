@@ -40,6 +40,9 @@ public class Bridge
                 var bytesRead = await stream.ReadAsync(buffer);
                 var clientMessage = Encoding.UTF8.GetString(buffer, 0, bytesRead);
                 
+                if (string.IsNullOrEmpty(clientMessage))
+                    continue;
+                
                 try
                 {
                     var message = JsonSerializer.Deserialize<BridgeMessage>(clientMessage);

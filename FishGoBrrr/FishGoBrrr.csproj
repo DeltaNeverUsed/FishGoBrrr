@@ -5,6 +5,7 @@
         <Nullable>enable</Nullable>
         <AssemblySearchPaths>$(AssemblySearchPaths);$(GDWeavePath)/core</AssemblySearchPaths>
         <Version>1.0.0.0</Version>
+        <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     </PropertyGroup>
 
     <ItemGroup>
@@ -16,8 +17,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Buttplug.Net" Version="0.1.0-ci0094" />
-      <PackageReference Include="Buttplug.Net.SystemTextJson" Version="0.1.0-ci0094" />
+      <PackageReference Include="Buttplug" Version="4.0.0" />
       <PackageReference Include="Serilog" Version="4.1.0" />
     </ItemGroup>
 
