@@ -16,7 +16,7 @@ Download and Install instructions are at the mods [thunderstore page](https://th
 - Scratch Off Ticket Feedback
 
 ## Config
-There are a bunch of options to adjust your *experience* such as vibration strengh and length in `{WEBFISHING}/GDWeave/configs/deltaneverused.fishgobrrr.json`
+There are a bunch of options to adjust your *experience* such as vibration strength and length in `{WEBFISHING}/GDWeave/configs/deltaneverused.fishgobrrr.json`
 
 ## Building
 
